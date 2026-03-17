@@ -11,4 +11,6 @@ Welcome to our case study review project! To view our work, follow these steps:
 3. Open the new folder
 4. Open the file named "index.html" (double click or right click > open)
 
+Alternatively, 
+
 If you have any questions, feel free to let us know.

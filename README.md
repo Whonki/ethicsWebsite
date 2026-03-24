@@ -1,4 +1,4 @@
-# PHIL314 Case Study Project
+# PHIL314 Case Study Project - Group 16
 Jason Phung, Caleb Gacek, Omael Laforest, Theran Ullyott, Valerie Naylor
 
 ## Getting Started

@@ -1,16 +1,19 @@
 * {
-    margin: 0%;
-    padding: 0%;
+    margin: 0;
+    padding: 0;
 }
+
 body {
+    padding-top: 5rem;
     background-color: rgb(255, 255, 255);
     color: rgb(0, 0, 0);
     font-family: monospace, sans-serif;
 }
-
-nav {
+/* Nav Bar.*/
+nav{
     background-color: rgb(245, 245, 245);
-    position: fixed;
+    position:fixed;
+    top: 0;
     width: 100%;
     z-index: 1;
 }
@@ -24,4 +27,13 @@ nav a {
 }
 nav #active {
     background-color: rgb(255, 255, 255);
+}
+h1 {
+    padding: 5rem;
+    text-align: center;
+}
+
+p, h2 {
+    margin: 2%;
+    position: relative;
 }

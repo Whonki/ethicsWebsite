@@ -3,64 +3,114 @@
 
 <head>
     <title>Ethics Website</title>
-    <link rel="stylesheet" href="./stylesheet.css">
+    <link rel="stylesheet" href="./stylesheet.css"> <!-- TODO: Make the website look pretty. New font + more basic colors. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
 </head>
-<body>
-    <!-- Header for nav bar. -->
+<body class="page">
 <header>
     <nav>
         <ul>
-            <a>PHIL314</a> <!-- This is completely optional. -->
-            <!-- TODO: Change the links to headers on the website to get the linear look we discussed abt. -->
-            <a href="index.html" id="active">Introduction</a>
-            <a href="analysis.html">Analysis</a>
-            <a href="arguments.html">Arguments</a>
-            <a href="sources.html">Sources</a>
+            <tittle>PHIL314</tittle> <!-- This title is completely optional. -->
+            <a href="#introduction" data-nav>Introduction</a>
+            <a href="#analysis" data-nav>Analysis</a>
+            <a href="#arguments" data-nav>Arguments</a>
+            <a href="#sources" data-nav>Sources</a>
         </ul>
-        <!-- TODO: Add animation that slides the nav bar down. -->
     </nav>
+    <!-- TODO: Make nav bar more narrow so it takes up less space in mobile version? -->
 </header>
     <h1>Ethics: Social Media Access and Age Restrictions</h1>
     <!-- TODO: Add buttons for citations + sources for ease of use. -->
-    <section>
-        <h2>Introduction</h2>
-        <p>Veniam aliquip esse velit officia eu laborum ea labore culpa aute ad commodo voluptate duis amet. Sint
-            voluptate ipsum enim laborum est. Incididunt commodo sit Lorem incididunt nisi irure labore. Ea proident
-            adipisicing nulla anim. Sit labore est enim. Voluptate cupidatat ea nulla elit eiusmod deserunt veniam ad
-            nulla nostrud labore consectetur proident veniam. Tempor pariatur amet est veniam sint incididunt id magna
-            adipisicing excepteur voluptate eiusmod. Laboris duis aute pariatur aute reprehenderit irure do dolor fugiat
-            incididunt voluptate nisi proident et excepteur. Quis excepteur est ex in eiusmod mollit est magna quis
-            aliqua ea eu.</p>
+    <section id="introduction" class="embed-section">
+        <iframe data-embed="true" src="introduction.html" title="Introduction"></iframe>
+    </section>
+    <section id="analysis" class="embed-section">
+        <iframe data-embed="true" src="analysis.html" title="Analysis"></iframe>
+    </section>
+    <section id="arguments" class="embed-section">
+        <iframe data-embed="true" src="arguments.html" title="Arguments"></iframe>
+    </section>
+    <section id="sources" class="embed-section">
+        <iframe data-embed="true" src="sources.html" title="Sources"></iframe>
     </section>
 
-    <section>
-        <h2>Analysis</h2>
-        <p>Aliqua irure excepteur do sunt. Quis culpa duis laborum culpa incididunt tempor dolor commodo quis aliquip
-            qui irure sint. Qui qui amet duis officia in ad ullamco. Eiusmod nostrud ipsum ipsum dolor. Aliquip do ipsum
-            consectetur quis ut incididunt ad. Ea anim do non tempor quis et enim. Laboris labore aliquip nostrud
-            exercitation est laboris cillum deserunt velit sint non consectetur. Velit laboris ipsum in tempor. Non
-            consequat sunt non irure tempor ipsum occaecat irure.</p>
-    </section>
+    <!-- DO NOT TOUCH!  -->
+    <script>
+        (function () {
+            var header = document.querySelector("header");
+            var links = document.querySelectorAll("nav a[data-nav]");
+            var sections = document.querySelectorAll(".embed-section");
+            var iframes = document.querySelectorAll("iframe[data-embed='true']");
+            
+            // To identify which header is currently active.
+            function activeSectionId() {
+                var navH = header.offsetHeight;
+                var y = window.scrollY + navH + 32;
+                var active = "top";
+                sections.forEach(function (sec) {
+                    if (sec.offsetTop <= y) active = sec.id;
+                });
+                return active;
+            }
+            // Changes the Nav bar activity based on what the header is
+            function syncNavAndHeader() {
+                var active = activeSectionId();
+                header.dataset.activeSection = active;
+                links.forEach(function (a) {
+                    a.removeAttribute("id");
+                    if (active !== "top" && a.getAttribute("href") === "#" + active) {
+                        a.id = "active";
+                    }
+                });
+            }
 
-    <section>
-        <h2>Arguments</h2>
-        <p>Minim magna sint adipisicing sit ad ad aute ullamco. Occaecat minim id elit aute Lorem ex proident non sint.
-            Incididunt reprehenderit cillum est laboris est dolore voluptate cillum ad excepteur pariatur magna.
-            Deserunt irure eiusmod aliquip cillum deserunt quis. Amet consectetur exercitation Lorem ipsum sunt sunt ad
-            labore enim nulla consequat eu cupidatat commodo dolore. Proident cillum id commodo est. Incididunt
-            reprehenderit deserunt irure Lorem laborum et id do consectetur qui id. Nisi in nostrud qui Lorem
-            exercitation ea nisi sunt nulla. Nisi qui labore sunt quis voluptate aliquip dolore aute commodo.</p>
-    </section>
+            // Resize iframes to match their embedded content height.
+            // This makes the embedded pages behave like regular page sections.
+            function resizeIframeToContent(iframe) {
+                try {
+                    var doc = iframe.contentDocument || iframe.contentWindow.document;
+                    if (!doc) return;
+                    // Use max of body/html scroll heights to handle browser differences.
+                    var height = Math.max(
+                        doc.body ? doc.body.scrollHeight : 0,
+                        doc.documentElement ? doc.documentElement.scrollHeight : 0
+                    );
+                    // Avoid setting an invalid/zero height during first paint.
+                    if (height > 0) iframe.style.height = height + "px";
+                } catch (e) {
+                    // If the environment blocks iframe access (rare for local same-origin),
+                    // we just keep the default height.
+                }
+            }
 
-    <section>
-        <h2>Sources</h2>
-        <p>Reprehenderit aliqua cillum reprehenderit esse in sunt et. Nisi ea exercitation culpa occaecat magna proident
-            labore adipisicing irure ullamco. Dolor consectetur dolor irure sint enim culpa elit dolor sit irure sint
-            esse eiusmod cillum. Fugiat nisi incididunt ad irure anim. Laborum occaecat do veniam qui ut et qui ad qui.
-            Quis laboris enim sint dolor cupidatat eiusmod id nisi occaecat nostrud. Culpa quis id irure incididunt
-            deserunt aliquip. Eu consequat deserunt excepteur ullamco consequat pariatur occaecat id velit adipisicing
-            officia. Proident aliqua Lorem consectetur esse laborum magna dolore ea ad.</p>
-    </section>
+            iframes.forEach(function (iframe) {
+                // Initial sizing once content is ready.
+                iframe.addEventListener("load", function () {
+                    resizeIframeToContent(iframe);
+                    // Re-sync nav after layout changes.
+                    requestAnimationFrame(syncNavAndHeader);
+                });
+            });
+
+            window.addEventListener("resize", function () {
+                iframes.forEach(function (iframe) {
+                    resizeIframeToContent(iframe);
+                });
+                syncNavAndHeader();
+            });
+
+            // Syncing nav bar + header
+            window.addEventListener("scroll", syncNavAndHeader, { passive: true });
+            window.addEventListener("hashchange", syncNavAndHeader);
+            window.addEventListener("load", function () {
+                requestAnimationFrame(syncNavAndHeader);
+                // In case load events happened before listeners or caching.
+                iframes.forEach(function (iframe) {
+                    resizeIframeToContent(iframe);
+                });
+            });
+            syncNavAndHeader();
+        })();
+    </script>
 </body>
 </html>

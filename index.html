@@ -25,7 +25,6 @@
         <h1>Ethics: Social Media Access and Age Restrictions</h1>
     </div>
     
-
     <!-- The embedded sections. -->
     <section id="introduction" class="embed-section">
         <iframe data-embed="true" data-embed-id="introduction" src="introduction.html?embed=introduction" title="Introduction" scrolling="no"></iframe>
@@ -89,6 +88,19 @@
                 }
             }
 
+            function resizeAllIframes() {
+                iframes.forEach(function (iframe) {
+                    resizeIframeToContent(iframe);
+                });
+            }
+
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(function () {
+                    resizeAllIframes();
+                    requestAnimationFrame(resizeAllIframes);
+                });
+            }
+
             iframes.forEach(function (iframe) {
                 // Initial sizing once content is ready.
                 iframe.addEventListener("load", function () {
@@ -105,15 +117,25 @@
                 syncNavAndHeader();
             });
 
+            // Allow embedded pages to request height updates after async layout changes.
+            window.addEventListener("message", function (event) {
+                var data = event && event.data;
+                if (!data || data.type !== "iframe-resize" || !data.embedId) return;
+                var iframe = document.querySelector("iframe[data-embed-id='" + data.embedId + "']");
+                if (!iframe) return;
+                if (typeof data.height === "number" && data.height > 0) {
+                    iframe.style.height = data.height + "px";
+                    requestAnimationFrame(syncNavAndHeader);
+                }
+            });
+
             // Syncing nav bar + header
             window.addEventListener("scroll", syncNavAndHeader, { passive: true });
             window.addEventListener("hashchange", syncNavAndHeader);
             window.addEventListener("load", function () {
                 requestAnimationFrame(syncNavAndHeader);
                 // In case load events happened before listeners or caching.
-                iframes.forEach(function (iframe) {
-                    resizeIframeToContent(iframe);
-                });
+                resizeAllIframes();
             });
             syncNavAndHeader();
         })();

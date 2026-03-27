@@ -19,7 +19,7 @@
             Quis laboris enim sint dolor cupidatat eiusmod id nisi occaecat nostrud. Culpa quis id irure incididunt
             deserunt aliquip. Eu consequat deserunt excepteur ullamco consequat pariatur occaecat id velit adipisicing
             officia. Proident aliqua Lorem consectetur esse laborum magna dolore ea ad.</p>
-            
+
         <h2>Group Contributions</h2>
         <!-- TODO: Replace lorem ipsum w/ a thing about group contributions and how it was distributed. -->
         <p>
@@ -29,6 +29,31 @@
             the website.
         </p>
     </section>
+    <script>
+        (function () {
+            var embedId = new URLSearchParams(window.location.search).get("embed");
+            if (!embedId) return;
+
+            function postHeight() {
+                var bodyHeight = document.body ? document.body.scrollHeight : 0;
+                var htmlHeight = document.documentElement ? document.documentElement.scrollHeight : 0;
+                var height = Math.max(bodyHeight, htmlHeight);
+                if (height > 0) {
+                    window.parent.postMessage({ type: "iframe-resize", embedId: embedId, height: height }, "*");
+                }
+            }
+
+            window.addEventListener("load", postHeight);
+            window.addEventListener("resize", postHeight);
+            postHeight();
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(function () {
+                    postHeight();
+                    requestAnimationFrame(postHeight);
+                });
+            }
+        })();
+    </script>
 </body>
 
 </html>

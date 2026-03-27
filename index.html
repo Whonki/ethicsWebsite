@@ -3,35 +3,41 @@
 
 <head>
     <title>Ethics Website</title>
-    <link rel="stylesheet" href="./stylesheet.css"> <!-- TODO: Make the website look pretty. New font + more basic colors. -->
+    <link rel="stylesheet" href="./stylesheet.css">
+    <!-- TODO: Make the website look pretty. New font + more basic colors. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
 </head>
-<body class="page">
-<header>
-    <nav>
-        <ul>
-            <tittle>PHIL314</tittle> <!-- This title is completely optional. -->
-            <a href="#introduction" data-nav>Introduction</a>
-            <a href="#analysis" data-nav>Analysis</a>
-            <a href="#arguments" data-nav>Arguments</a>
-            <a href="#sources" data-nav>Sources</a>
-        </ul>
-    </nav>
-    <!-- TODO: Make nav bar more narrow so it takes up less space in mobile version? -->
-</header>
-    <h1>Ethics: Social Media Access and Age Restrictions</h1>
-    <!-- TODO: Add buttons for citations + sources for ease of use. -->
+
+<body class="page bg-image">
+    <header>
+        <nav>
+            <ul>
+                <tittle>PHIL314</tittle> <!-- This title is completely optional. -->
+                <a href="#introduction" data-nav>Introduction</a>
+                <a href="#analysis" data-nav>Analysis</a>
+                <a href="#arguments" data-nav>Arguments</a>
+                <a href="#sources" data-nav>Sources</a>
+            </ul>
+        </nav>
+    </header>
+    <!-- The non-embedded section. -->
+    <div class="title-page">
+        <h1>Ethics: Social Media Access and Age Restrictions</h1>
+    </div>
+    
+
+    <!-- The embedded sections. -->
     <section id="introduction" class="embed-section">
-        <iframe data-embed="true" src="introduction.html" title="Introduction"></iframe>
+        <iframe data-embed="true" data-embed-id="introduction" src="introduction.html?embed=introduction" title="Introduction" scrolling="no"></iframe>
     </section>
     <section id="analysis" class="embed-section">
-        <iframe data-embed="true" src="analysis.html" title="Analysis"></iframe>
+        <iframe data-embed="true" data-embed-id="analysis" src="analysis.html?embed=analysis" title="Analysis" scrolling="no"></iframe>
     </section>
     <section id="arguments" class="embed-section">
-        <iframe data-embed="true" src="arguments.html" title="Arguments"></iframe>
+        <iframe data-embed="true" data-embed-id="arguments" src="arguments.html?embed=arguments" title="Arguments" scrolling="no"></iframe>
     </section>
     <section id="sources" class="embed-section">
-        <iframe data-embed="true" src="sources.html" title="Sources"></iframe>
+        <iframe data-embed="true" data-embed-id="sources" src="sources.html?embed=sources" title="Sources" scrolling="no"></iframe>
     </section>
 
     <!-- DO NOT TOUCH!  -->
@@ -41,7 +47,7 @@
             var links = document.querySelectorAll("nav a[data-nav]");
             var sections = document.querySelectorAll(".embed-section");
             var iframes = document.querySelectorAll("iframe[data-embed='true']");
-            
+
             // To identify which header is currently active.
             function activeSectionId() {
                 var navH = header.offsetHeight;
@@ -113,4 +119,5 @@
         })();
     </script>
 </body>
+
 </html>

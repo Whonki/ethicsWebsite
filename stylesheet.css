@@ -6,37 +6,127 @@
 html {
     scroll-behavior: smooth;
 }
-
-.embed-section {
-    scroll-margin-top: 6rem;
+@font-face {
+    font-family: academy-engraved;
+    src: url("Academy Engraved LET Fonts.ttf");
+}
+@font-face {
+    font-family: paprika;
+    src: url(Paprika-Regular.ttf);
+}
+body {
+    background-color: rgb(191, 191, 191);
+    color: rgb(0, 0, 0);
+    opacity: 90%;
+    font-family: paprika;
+    font-size: 80%;
 }
 
-body {
-    background-color: rgb(255, 255, 255);
-    color: rgb(0, 0, 0);
-    font-family: monospace, sans-serif;
+.bg-image{
+    background-image: url("./IMG_1091.jpeg");
+    background-color:rgb(200, 200, 200); /* I HATE burlywood, change pls */
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.title-page{
+    padding-bottom: 40%;
+    padding: 5rem;
+    text-align: center;
+}
+
+p, h2 {
+    position: relative;
+}
+h3{
+    padding-top: 5%;
+}
+
+.embed-section {
+    scroll-margin-top: 10rem;
 }
 
 .page {
     padding-top: 5rem; /* Space for the fixed nav bar. */
+    
 }
 
 body.embedded {
     padding-top: 0; /* Embedded pages are already inside a parent document with the nav. */
+    padding-left: 5%;
+    padding-right: 5%;
+    text-align: center;
+    padding: 30px;
+    font-family: paprika;
+}
+body.embedded p {
+    margin: 0.9rem 0;
 }
 
 .embed-section {
     width: 100%;
+    padding-bottom: 3%;
+    border-radius: 24px;
+    overflow: hidden;
+}
+/* Two columns — only on arguments.html (loaded inside iframe; body has .arguments) */
+body.embedded.arguments .arguments-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    align-items: start;
+    text-align: left;
+}
+
+body.embedded.arguments .arguments-page > h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+body.embedded.arguments .argument-card {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(210, 220, 235, 0.95);
+    border-radius: 16px;
+    padding: 0.75rem 1rem 1rem;
+}
+
+body.embedded.arguments .argument-card h3 {
+    padding-top: 0;
+    margin-bottom: 0.45rem;
+}
+
+body.embedded.arguments .argument-card p {
+    margin: 0;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+}
+
+@media (max-width: 900px) {
+    body.embedded.arguments .arguments-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .embed-section iframe {
-    width: 100%;
+    width: min(92%, 980px);
+    margin: 0 auto;
     border: 0;
     display: block;
-    height: 1000px; /* Fallback; JS will resize this to the real content height when possible. */
-    max-width: 100%;
+    overflow: hidden;
+    border-radius: 24px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.22);
 }
-
+.embed-section p{
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(210, 220, 235, 0.95);
+    padding: 1rem 1.2rem;
+}
 /* Nav bar w/ base + theme per section (synced via header[data-active-section] on index). */
 nav {
     background-color: rgb(245, 245, 245);
@@ -48,38 +138,13 @@ nav {
     transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
-/*Color changing to indicate a new heading*/
-header[data-active-section="top"] nav {
-    background-color: rgb(245, 245, 245);
-    border-bottom-color: rgb(200, 200, 200);
-}
-
-header[data-active-section="introduction"] nav {
-    background-color: rgb(232, 242, 255);
-    border-bottom-color: rgb(120, 160, 210);
-}
-
-header[data-active-section="analysis"] nav {
-    background-color: rgb(240, 248, 240);
-    border-bottom-color: rgb(100, 150, 110);
-}
-
-header[data-active-section="arguments"] nav {
-    background-color: rgb(255, 242, 235);
-    border-bottom-color: rgb(200, 130, 90);
-}
-
-header[data-active-section="sources"] nav {
-    background-color: rgb(248, 242, 255);
-    border-bottom-color: rgb(150, 120, 190);
-}
-
+/* Actual button changes shenanigans. */
 nav a,
 nav tittle {
     color: rgb(0, 0, 0);
-    font-size: 27px;
-    font-family: monospace, sans-serif;
-    padding: 25px 2.5%;
+    font-size: 25px;
+    font-family: academy-engraved, monospace, sans-serif; /* Change font here */
+    padding: 20px 2.5%;
     text-decoration: none;
     float: left;
 }
@@ -87,11 +152,29 @@ nav tittle {
 nav #active {
     background-color: rgba(255, 255, 255, 0.85);
 }
-h1 {
-    padding: 5rem;
-    text-align: center;
+
+/*Color changing to indicate a new heading*/
+header[data-active-section="top"] nav {
+    background-color: rgb(245, 245, 245); /* default color*/
+    border-bottom-color: rgb(200, 200, 200); /* active color*/
 }
 
-p, h2 {
-    position: relative;
+header[data-active-section="introduction"] nav {
+    background-color: rgb(232, 242, 255); /* default color*/
+    border-bottom-color: rgb(120, 160, 210); /* active color*/
+}
+
+header[data-active-section="analysis"] nav {
+    background-color: rgb(240, 248, 240); /* default color*/
+    border-bottom-color: rgb(100, 150, 110); /* active color*/
+}
+
+header[data-active-section="arguments"] nav {
+    background-color: rgb(255, 242, 235); /* default color*/
+    border-bottom-color: rgb(200, 130, 90); /* active color*/
+}
+
+header[data-active-section="sources"] nav {
+    background-color: rgb(248, 242, 255); /* default color*/
+    border-bottom-color: rgb(150, 120, 190); /* active color*/
 }

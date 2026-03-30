@@ -29,9 +29,11 @@
         <iframe data-embed="true" data-embed-id="introduction" src="introduction.html?embed=introduction"
             title="Introduction" scrolling="no"></iframe>
     </section>
-    <section id="analysis" class="embed-section">
-        <iframe data-embed="true" data-embed-id="analysis" src="analysis.html?embed=analysis" title="Analysis"
-            scrolling="no"></iframe>
+    <section id="analysis" class="embed-section embed-section--clip">
+        <div class="embed-frame">
+            <iframe data-embed="true" data-embed-id="analysis" src="analysis.html?embed=analysis" title="Analysis"
+                scrolling="no"></iframe>
+        </div>
     </section>
     <section id="arguments" class="embed-section">
         <iframe data-embed="true" data-embed-id="arguments" src="arguments.html?embed=arguments" title="Arguments"
@@ -72,22 +74,33 @@
                 });
             }
 
-            // Resize iframes to match their embedded content height.
-            // This makes the embedded pages behave like regular page sections.
+            function measureIframeDocHeight(doc) {
+                var b = doc.body;
+                var e = doc.documentElement;
+                if (!b || !e) return 0;
+                return Math.max(
+                    b.scrollHeight,
+                    e.scrollHeight,
+                    b.offsetHeight,
+                    e.offsetHeight
+                );
+            }
+
+            // Resize iframes to match embedded document height (fonts / lists need offsetHeight + postMessage).
             function resizeIframeToContent(iframe) {
                 try {
                     var doc = iframe.contentDocument || iframe.contentWindow.document;
                     if (!doc) return;
-                    // Use max of body/html scroll heights to handle browser differences.
-                    var height = Math.max(
-                        doc.body ? doc.body.scrollHeight : 0,
-                        doc.documentElement ? doc.documentElement.scrollHeight : 0
-                    );
-                    // Avoid setting an invalid/zero height during first paint.
-                    if (height > 0) iframe.style.height = height + "px";
+                    var height = measureIframeDocHeight(doc);
+                    if (height > 0) {
+                        var newH = Math.ceil(height) + 2;
+                        var curH = parseFloat(iframe.style.height) || 0;
+                        if (Math.abs(curH - newH) > 2) {
+                            iframe.style.height = newH + "px";
+                        }
+                    }
                 } catch (e) {
-                    // If the environment blocks iframe access (rare for local same-origin),
-                    // we just keep the default height.
+                    /* same-origin only */
                 }
             }
 
@@ -127,8 +140,12 @@
                 var iframe = document.querySelector("iframe[data-embed-id='" + data.embedId + "']");
                 if (!iframe) return;
                 if (typeof data.height === "number" && data.height > 0) {
-                    iframe.style.height = data.height + "px";
-                    requestAnimationFrame(syncNavAndHeader);
+                    var newH = Math.ceil(data.height) + 2;
+                    var curH = parseFloat(iframe.style.height) || 0;
+                    if (Math.abs(curH - newH) > 2) {
+                        iframe.style.height = newH + "px";
+                        requestAnimationFrame(syncNavAndHeader);
+                    }
                 }
             });
 
